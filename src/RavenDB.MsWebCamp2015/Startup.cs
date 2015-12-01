@@ -17,6 +17,7 @@ namespace RavenDB.MsWebCamp2015
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                .AddUserSecrets()
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -26,6 +27,7 @@ namespace RavenDB.MsWebCamp2015
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInstance<IConfiguration>(Configuration);
             // Add framework services.
             services.AddMvc();
         }
