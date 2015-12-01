@@ -1,8 +1,14 @@
-﻿@using System.Threading.Tasks
+﻿@model RavenDB.MsWebCamp2015.Models.SiteConfig
+
 @{
     ViewData["Title"] = "Home Page";
-
 }
+
 <div>
-	<h1>My blank site</h1>
+	<h1>@Model.SiteName</h1>
+	<ul>
+		<li>SmtpServer: @Model.Email.SmtpServer</li>
+		<li>Port: @Model.Email.Port</li>
+		<li>Sender: @Model.Email.Sender</li>
+	</ul>
 </div>

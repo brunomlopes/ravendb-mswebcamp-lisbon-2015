@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Mvc;
+using Raven.Client;
+using RavenDB.MsWebCamp2015.Models;
 
 namespace RavenDB.MsWebCamp2015.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IDocumentSession _session;
+
+        public HomeController(IDocumentSession session)
+        {
+            _session = session;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var config = _session.Load<SiteConfig>(SiteConfig.SiteConfigId);
+            return View(config);
         }
     }
 }

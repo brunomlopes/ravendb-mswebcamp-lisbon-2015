@@ -28,6 +28,7 @@ namespace RavenDB.MsWebCamp2015
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInstance<IConfiguration>(Configuration);
+            services.AddRavenDB();
             // Add framework services.
             services.AddMvc();
         }
@@ -43,6 +44,8 @@ namespace RavenDB.MsWebCamp2015
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseRavenDB();
 
             app.UseIISPlatformHandler();
 
