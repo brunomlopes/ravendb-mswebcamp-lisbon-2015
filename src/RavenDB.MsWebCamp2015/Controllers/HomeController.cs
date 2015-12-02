@@ -5,6 +5,7 @@ using Microsoft.AspNet.Mvc;
 using Raven.Client;
 using RavenDB.MsWebCamp2015.Models;
 using Raven.Client.Linq;
+using RavenDB.MsWebCamp2015.Indexes;
 
 namespace RavenDB.MsWebCamp2015.Controllers
 {
@@ -53,6 +54,17 @@ namespace RavenDB.MsWebCamp2015.Controllers
             {
                 Count = allSpeakers.Count,
                 Speakers = allSpeakers
+            });
+        }
+
+        public IActionResult Tags()
+        {
+            var counts = _session.Query<Speakers_PerTags.SpeakerCountByTag, Speakers_PerTags>()
+                .ToList();
+
+            return View(new HomeTagsViewModel()
+            {
+                CountPerTag = counts.ToDictionary(t => t.Tag, t => t.Count)
             });
         }
     }

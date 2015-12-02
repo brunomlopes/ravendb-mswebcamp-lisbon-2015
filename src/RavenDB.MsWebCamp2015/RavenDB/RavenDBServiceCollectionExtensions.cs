@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Indexes;
+using RavenDB.MsWebCamp2015.Indexes;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -14,11 +16,14 @@ namespace Microsoft.Extensions.DependencyInjection
                 var url = configuration[urlKey];
                 var apiKey = configuration[apiKeyKey];
 
-                return new DocumentStore
+                var documentStore = new DocumentStore
                 {
                     Url = url,
                     ApiKey = apiKey
                 }.Initialize();
+
+                IndexCreation.CreateIndexes(typeof(Speakers_PerTags).Assembly, documentStore);
+                return documentStore;
             });
 
             collection.AddScoped(p => p.GetService<IDocumentStore>().OpenSession());
