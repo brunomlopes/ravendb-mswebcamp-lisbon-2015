@@ -38,5 +38,15 @@ namespace RavenDB.MsWebCamp2015.Controllers
             }
             return Json(newSpeakers);
         }
+
+        public IActionResult Speakers()
+        {
+            var allSpeakers = _session.Query<Speaker>().ToList();
+            return View(new HomeSpeakersViewModel()
+            {
+                Count = allSpeakers.Count,
+                Speakers = allSpeakers
+            });
+        }
     }
 }

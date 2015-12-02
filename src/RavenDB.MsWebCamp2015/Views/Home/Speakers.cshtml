@@ -1,0 +1,15 @@
+﻿@model RavenDB.MsWebCamp2015.Models.HomeSpeakersViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+	<h1>@Model.Count speakers</h1>
+	<ul>
+		@foreach (var speaker in @Model.Speakers)
+		{
+            <li>@speaker.Name, @(string.Join(",", speaker.Tags))</li>
+        }
+	</ul>
+</div>
