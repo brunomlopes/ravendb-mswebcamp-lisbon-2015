@@ -43,10 +43,6 @@ namespace RavenDB.MsWebCamp2015
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
 
             app.UseIISPlatformHandler();
 
