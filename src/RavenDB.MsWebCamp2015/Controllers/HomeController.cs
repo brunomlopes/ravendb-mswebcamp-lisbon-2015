@@ -4,6 +4,7 @@ using Bogus;
 using Microsoft.AspNet.Mvc;
 using Raven.Client;
 using RavenDB.MsWebCamp2015.Models;
+using Raven.Client.Linq;
 
 namespace RavenDB.MsWebCamp2015.Controllers
 {
@@ -39,9 +40,15 @@ namespace RavenDB.MsWebCamp2015.Controllers
             return Json(newSpeakers);
         }
 
-        public IActionResult Speakers()
+        public IActionResult Speakers(string tag = null)
         {
-            var allSpeakers = _session.Query<Speaker>().ToList();
+            var query = _session.Query<Speaker>();
+            if (!string.IsNullOrWhiteSpace(tag))
+                query = query.Where(s => s.Tags.Contains(tag));
+
+            var allSpeakers = query
+                .OrderBy(s => s.Name)
+                .ToList();
             return View(new HomeSpeakersViewModel()
             {
                 Count = allSpeakers.Count,

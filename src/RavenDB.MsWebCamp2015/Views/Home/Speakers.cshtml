@@ -9,7 +9,8 @@
 	<ul>
 		@foreach (var speaker in @Model.Speakers)
 		{
-            <li>@speaker.Name, @(string.Join(",", speaker.Tags))</li>
+            <li>@speaker.Name, @foreach (var tag in speaker.Tags)
+			{ <a asp-controller="Home" asp-action="speakers" asp-route-tag="@tag">@tag </a> }  </li>
         }
 	</ul>
 </div>
